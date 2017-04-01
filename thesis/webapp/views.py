@@ -7,6 +7,9 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render_to_response,HttpResponseRedirect
+from django.template import RequestContext
 
 
 # Create your views here.
@@ -47,11 +50,33 @@ def register(request):
 			email=user_form.cleaned_data['email'],
 			first_name=user_form.cleaned_data['first_name'],
 			last_name=user_form.cleaned_data['last_name']
+
+
+
+
 			)
 	else:
 		user_form = recordUser()
 
 	return render(request, 'webapp/registration.html', {'user_form' : user_form})
+
+def login_user(request):
+    logout(request)
+    username = password = ''
+    if request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('webapp/home/')
+    return render_to_response('webapp/login.html', RequestContext(request))
+
+def test_display_historical(request):
+	# processed_data = RawData_Weathe r.objects.filter(timestamp=).aggregate(Avg('load'))
+	return render(request, 'webapp/index.html')#, processed_data)
 
 class AdvancedGraph(HighChartsMultiAxesView):
 	title = 'Weather Data'
@@ -126,7 +151,8 @@ class PowerGraph(HighChartsMultiAxesView):
 
 	def get_data(self):
 		data = {'id': [], 'load': [], 'SP_pow':[], 'timestamp':[]}
-		f = RawData_AMPS.objects.filter(owner = User.objects.get(username=self.request.user))[:10]
+		# f = RawData_AMPS.objects.filter(owner = User.objects.get(username=self.request.user))[:10]
+		f = RawData_AMPS.objects.filter(owner = User.objects.get(username='rizzah'))[:10]
 		for unit in f:
 			data['id'].append(unit.id)
 			data['timestamp'].append(unit.timestamp.strftime('%I:%M'))

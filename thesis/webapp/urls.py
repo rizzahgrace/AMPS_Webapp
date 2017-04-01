@@ -4,7 +4,8 @@ from . import views
 
 app_name = 'webapp'
 urlpatterns = [
-	url(r'^login/$', auth_views.login, {'template_name': 'webapp/home.html'}, name='login'),
+	# url(r'^login/$', auth_views.login, {'template_name': 'webapp/home.html'}, name='login'),
+	url(r'^login', views.login_user, name='login'),
     url(r'^index', views.index, name='index'),
     url(r'^register', views.register, name='register'),
     url(r'^home', views.home, name='home'),

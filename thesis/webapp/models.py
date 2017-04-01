@@ -25,6 +25,7 @@ class RawData_AMPS(models.Model):
 	load = models.FloatField(null=True)
 	batt_curr = models.FloatField(null=True)
 	batt_volt = models.FloatField(null=True)
+	batt_pow = models.FloatField(null=True)
 	SP_curr = models.FloatField(null=True)
 	SP_volt = models.FloatField(null=True)
 	SP_pow = models.FloatField(null=True)
