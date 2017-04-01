@@ -2,7 +2,9 @@ from django.shortcuts import render
 from webapp.forms import UploadCSVFile, recordUser
 from webapp.utils import handle_upload_file
 from highcharts.views import (HighChartsMultiAxesView, HighChartsStockView)
-
+from .models import RawData_AMPS, RawData_Weather
+from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -11,9 +13,6 @@ def index(request):
 
 def home(request):
 	return render(request, 'webapp/home2.html')
-
-def edits(request):
-	return render(request, 'webapp/home3.html')
 
 def weather(request):
 	return render(request, 'webapp/weather.html')
@@ -33,6 +32,23 @@ def csv(request):
 		form = UploadCSVFile()
 
 	return render(request, 'webapp/csv.html', {'form': form})
+
+@csrf_protect
+def register(request):
+	if request.method == 'POST':
+		user_form = recordUser(request.POST)
+		if user_form.is_valid():
+			user = User.objects.create_user(
+			username=user_form.cleaned_data['username'],
+			password=user_form.cleaned_data['password1'],
+			email=user_form.cleaned_data['email'],
+			first_name=user_form.cleaned_data['first_name'],
+			last_name=user_form.cleaned_data['last_name']
+			)
+	else:
+		user_form = recordUser()
+
+	return render(request, 'webapp/registration.html', {'user_form' : user_form})
 
 class AdvancedGraph(HighChartsMultiAxesView):
 	title = 'Weather Data'
