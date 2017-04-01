@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from webapp.forms import UploadCSVFile, recordOwner, recordUser
+from webapp.forms import UploadCSVFile, recordUser
 from webapp.utils import handle_upload_file
 from highcharts.views import (HighChartsMultiAxesView, HighChartsStockView)
 

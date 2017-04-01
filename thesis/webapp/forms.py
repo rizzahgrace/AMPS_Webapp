@@ -1,40 +1,23 @@
 from .models import RawData_Weather
 from django import forms
 from django.contrib.auth.models import User
-from .models import Owner
+
 
 class UploadCSVFile(forms.Form):
     csvfile = forms.FileField()
     owner = forms.ModelChoiceField(
         label="Owner",
-        queryset=Owner.objects.order_by('last_name'),
+        queryset=User.objects.order_by('username'),
         required=True,
         empty_label='Choose an owner'
     )
 
-class recordOwner(forms.ModelForm):
-    last_name = forms.CharField(
-        label="Last Name",
-        required=True,
-    )
-
-    first_name = forms.CharField(
-        label="First Name",
-        required=True,
-    )
-
-    address = forms.CharField(
-        label="Address",
-        required=True,
-    )
-
-    class Meta:
-        model = Owner
-        exclude = ['AMPS_user']
 
 class recordUser(forms.Form):
  
     username = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=True, max_length=30)), label=("Username"), error_messages={ 'invalid': ("This value must contain only letters, numbers and underscores.") })
+    first_name = forms.CharField(label = "First Name")
+    last_name = forms.CharField(label = "Last Name")
     email = forms.EmailField(widget=forms.TextInput(attrs=dict(required=True, max_length=30)), label=("Email address"))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label=("Password"))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label=("Password (again)"))
