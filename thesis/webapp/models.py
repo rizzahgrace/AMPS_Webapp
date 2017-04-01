@@ -30,5 +30,6 @@ class RawData_AMPS(models.Model):
 	SP_pow = models.FloatField(null=True)
 	timestamp = models.DateTimeField('date logged', default = now)
 	owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+		
 
 

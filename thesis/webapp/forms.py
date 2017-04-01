@@ -14,7 +14,6 @@ class UploadCSVFile(forms.Form):
 
 
 class recordUser(forms.Form):
- 
     username = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=True, max_length=30)), label=("Username"), error_messages={ 'invalid': ("This value must contain only letters, numbers and underscores.") })
     first_name = forms.CharField(label = "First Name")
     last_name = forms.CharField(label = "Last Name")

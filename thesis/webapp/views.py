@@ -5,6 +5,9 @@ from highcharts.views import (HighChartsMultiAxesView, HighChartsStockView)
 from .models import RawData_AMPS, RawData_Weather
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # Create your views here.
 
@@ -120,9 +123,10 @@ class PowerGraph(HighChartsMultiAxesView):
 		'y': 30
 	}
 
+
 	def get_data(self):
 		data = {'id': [], 'load': [], 'SP_pow':[], 'timestamp':[]}
-		f = RawData_AMPS.objects.all()[:10]
+		f = RawData_AMPS.objects.filter(owner = User.objects.get(username=self.request.user))[:10]
 		for unit in f:
 			data['id'].append(unit.id)
 			data['timestamp'].append(unit.timestamp.strftime('%I:%M'))
