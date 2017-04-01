@@ -1,0 +1,463 @@
+{% load static %}
+{% load highcharts_tags %}
+<!DOCTYPE html>
+<!---THIS ONE-->
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Solar Energy Guide</title>
+<!--   https://imgur.com/a/i4ohB
+ -->
+  <!-- CSS  -->
+
+  <!-- local links-->
+<link href={% static 'webapp/css/materialize.css' %} type="text/css" rel="stylesheet" media="screen,projection"/>
+<link href={% static 'webapp/css/style.css' %} type="text/css" rel="stylesheet" media="screen,projection"/>
+<link href={% static 'webapp/css/my.css' %} type="text/css" rel="stylesheet" media="screen,projection"/>
+<link rel="stylesheet" href={% static 'webapp/css/font-awesome.min.css' %}>
+<link href={% static 'webapp/css/font-awesome.css' %} type="text/css" rel="stylesheet" media="screen,projection"/>
+<link href={% static 'webapp/css/animate.css' %} type="text/css" rel="stylesheet" media="screen,projection"/>
+
+<!-- online links-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|PT+Sans|Roboto+Condensed|Oswald" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- local scripts-->
+<script src={% static 'webapp/images/css/materialize.js' %}></script>
+<script src={% static 'webapp/images/css/init.js' %}></script>
+<script src = {% static 'webapp/css/script.js' %}></script>
+<script src = {% static 'webapp/css/jquery.scrollme.js' %}></script>
+
+<!-- online scripts--> 
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenLite.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineLite.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+<script src="https://use.fontawesome.com/af9dfbaac1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+<script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+<script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
+
+
+<!-- for the graph -->
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+    <script type="text/javascript">
+    (function ($) {
+        $.getJSON("{% url 'webapp:dbbar' %}", function(data) {
+        $('#chart_container').highcharts(data);
+        });
+    })(jQuery);
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body bgcolor = "#eeeeee">
+
+   
+  <div class = "navbar-fixed">
+  <nav class=" light-blue darken-4" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="home.html" class="brand-logo left">
+      
+      <!--<span class = "white-text thin condensed-light "> -->
+      <font face = "PT Sans Narrow">
+      Analytics Monitoring for Power Systems</a></span></font>
+      <ul class="left hide-on-med-and-down">
+        <li>
+        <!--
+          <a href="index.html"><img class = "responsive-img" src="nl2.png" width = "50" height = "50"></a>
+          -->
+          </li>
+      </ul>
+      <ul class="right hide-on-med-and-down">
+        <li>
+          <a href="home.html">
+
+              <script type="text/javascript">
+                
+                tmonth=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+
+                function GetClock(){
+                var d=new Date();
+                var nday=d.getDay(),nmonth=d.getMonth(),ndate=d.getDate(),nyear=d.getYear();
+                if(nyear<1000) nyear+=1900;
+                var nhour=d.getHours(),nmin=d.getMinutes(),nsec=d.getSeconds(),ap;
+
+                if(nhour==0){ap=" AM";nhour=12;}
+                else if(nhour<12){ap=" AM";}
+                else if(nhour==12){ap=" PM";}
+                else if(nhour>12){ap=" PM";nhour-=12;}
+
+                if(nmin<=9) nmin="0"+nmin;
+                if(nsec<=9) nsec="0"+nsec;
+
+                document.getElementById('clockbox').innerHTML=""+tmonth[nmonth]+" "+ndate+", "+nyear+" "+nhour+":"+nmin+":"+nsec+ap+"";
+                }
+
+                window.onload=function(){
+                GetClock();
+                setInterval(GetClock,1000);
+                }
+                </script>
+                <div id="clockbox"></div>
+
+
+          </a>
+          </li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#"><img src={% static 'webapp/images/sol0.png' %}></a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  </div>
+<div class = "container">
+   <div class="row">
+   <div class = "col s12"> <br><br> </div>
+    <div class = "col s6 animated zoomIn ">
+    <font face= "PT Sans">
+    <center>
+    <br>
+    <br>
+    <h4>
+    The Weather Station - PLDT - CTC Building </h4>
+<br>
+The Weather Station is an installment located in the PLDT-CTC Building of the Ateneo de manila University.
+It can measure temperature, rainfall, humidity, wind speed, wind direction, and solar irradiance.
+    </center>
+    </div>
+    <div class = "col s6">
+    <center>
+    <img src = {% static 'webapp/images/temp.png' %} class = "responsive-img animated zoomIn">
+    </center>
+    </div>
+      
+    <!--   <div class = "col s12"><br></div>
+      <font face = "PT Sans">
+      <center>
+        <H3>
+          Weather Station - Faura Hall
+        </H3>
+      </center>
+      </font>
+      </div> -->
+      <div class = "col s12">
+      <br>
+      </div>
+      <div class =" col s12 m3 l3">
+      <div class ="card white animated slideInUp">
+        <div class = "card-content black-text">
+        <center>
+      <i class="fa fa-thermometer-0 icon-lbd4 fa-5x">
+        
+      </i>
+      <font face = "Open Sans" size="15">
+        
+        26°
+        </font>
+      <br>
+       Temperature
+      </center>
+        </div>
+        </div>
+      </div>
+      <div class = "col s12 m3 l3">
+      <div class ="card white animated slideInUp">
+        <div class = "card-content black-text">
+        <center>
+      <i class="fa fa-tint icon-lbd4 fa-5x">
+        
+      </i>
+      <font face = "Open Sans" size="15">
+        
+        2mm
+        
+        </font>
+      <br>
+       Rain Fall
+      </center>
+        </div>
+        </div>
+      </div>
+      <div class = "col s12 m3 l3">
+      <div class ="card white animated slideInUp">
+        <div class = "card-content black-text">
+        <center>
+      <i class="fa fa-arrow-left fa-spin icon-lbd4 fa-5x">
+        
+      </i>
+      <font face = "Open Sans" size="10">
+        18k
+        </font>
+      <br>
+       Wind Speed
+      </center>
+        </div>
+        </div>
+      </div>
+
+      <div class = "col s12 m3 l3">
+      <div class ="card white animated slideInUp">
+        <div class = "card-content black-text">
+        <center>
+      <i class="fa fa-shower icon-lbd4 fa-5x">
+        
+      </i>
+      <font face = "Open Sans" size="12">
+        52%
+        </font>
+      <br>
+       Humidity
+      </center>
+        </div>
+        </div>
+      </div>
+       <div class="col s12">
+      <div class = "card white animated slideInUp">
+          <div class = "card-content gray-text">
+             <div id="chart_container" style="width: 100%; height: 400px;" ></div>      
+          </div>
+        </div>
+      </div>
+
+
+      <div class = "col s12">
+<center>
+<font face = "PT Sans">
+<h4> <i>How weather affects solar output:</i></h4>
+</font>
+</center>
+</div>
+
+<div class = "col s4">
+
+
+  <ul class="collapsible popout" data-collapsible="expandable">
+    <li>
+      <div class="collapsible-header"><i class="material-icons">filter_drama</i>Rainfall</div>
+      <div class="collapsible-body"><span>
+      <center>
+      <br>
+      Rainfall affects solar power output drastically. 
+      Since rain is connected with cloud coverage, the solar panels receive little amount of sunlight.
+      This affects the power production for the day.  [1]
+      <br>
+       &nbsp;
+      </center>
+      </span></div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">place</i>Wind Speed</div>
+      <div class="collapsible-body"><span>
+        <center>
+      <br>
+      According to multiple studies, wind speed has little to no correlation to solar power production. 
+      Although, it could affect dust accumulation in the panels ultimately affecting production.
+      But hey it would be nice to know how fast the wind blows doesn't it? [1]
+      <br>
+       &nbsp;
+      </center>
+      </span></div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">whatshot</i>Temperature</div>
+      <div class="collapsible-body"><span>
+        
+       <center>
+      <br>
+      At higher values, temperature correlates directly with solar power output. If the temperature is high,
+      it's hot, and more power is produced. [1]
+      <br>
+       &nbsp;
+      </span></div>
+    </li>
+  </ul>
+
+
+</div>
+
+<div class = "col s4">
+
+
+  <ul class="collapsible popout" data-collapsible="expandable">
+    <li>
+      <div class="collapsible-header"><i class="material-icons">filter_drama</i>Solar Irradiance</div>
+      <div class="collapsible-body"><span>
+       <center>
+      <br>
+     Solar Irradiance is equivalent to solar intensity! It's the power received per unit area from the sun! [2]
+      <br>
+       &nbsp;
+
+      </span></div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">place</i>Wind  Direction</div>
+      <div class="collapsible-body"><span>
+        
+        <center>
+      <br>
+      Much like wind speed, wind direction has little to no correlation to solar power production. 
+      Although, it could affect dust accumulation in the panels ultimately affecting power production.
+      But hey it would be nice to know where the wind blows doesn't it? [1]
+      <br>
+       &nbsp;
+      </span></div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">whatshot</i>Relative Humidity</div>
+      <div class="collapsible-body"><span>
+       <center>
+      <br>
+        Relative Humidity correlates negatively with solar power production! This means that if 
+        the day's humidity is low, solar production is high, and the inverse occurs if humidity is high.
+      <br>
+       &nbsp;
+      </span></div>
+    </li>
+  </ul>
+
+
+</div>
+<div class = "col s4">
+
+     <ul class="collapsible popout" data-collapsible="expandable">
+    <li>
+      <div class="collapsible-header"><i class="material-icons">filter_drama</i>Other Atmospheric Conditions</div>
+      <div class="collapsible-body"><span>
+        
+        <center>
+      <br>
+      There are other atmospheric conditions not covered in the graph that affects solar power output.
+      One such is cloud coverage. Cloud coverage negatively affects solar power production, as it blocks out sunlight.
+      This means that cloudy days equate to low production days.
+      <br>
+       &nbsp;
+
+      </span></div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">place</i>Weather Forecasting Sites</div>
+      <div class="collapsible-body"><span>
+        
+       <center>
+      <br>
+     Our weather station is located in Ateneo de Manila University,Loyola Heights, Quezon City.
+     If you are not located in this area, refer to the other links below to know about the weather conditions
+     in your location:
+     <br>
+     <a href="http://www.accuweather.com/en/ph/philippines-weather">AccuWeather</a>
+     <br>
+     <a href="http://www.metroweather.com.ph/">MetroWeather by Manila Observatory</a>
+     <br>
+     <a href="https://www.wunderground.com/">Wunderground</a>
+      <br>
+       &nbsp;
+
+      </span></div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">whatshot</i>Further Links</div>
+      <div class="collapsible-body"><span>
+      
+      <center>
+      <br>
+      Know more about solar power in our FAQs page!  <a href="#"> Link here. :D </a>
+      <br>
+       &nbsp;
+
+      </span></div>
+    </li>
+  </ul>
+</div>
+      <div class="col s12">
+      <div class = "card white">
+          <div class = "card-content gray-text">
+          <center>
+          <h5> Meteo.com Weather Data and Forecast Comparison</h5>
+          <iframe src="https://www.meteoblue.com/en/weather/widget/three/quezon-city_philippines_1692192?geoloc=fixed&nocurrent=0&noforecast=0&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&layout=monochrome"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style="width: 805px;height: 622px"></iframe><div>
+          </center>
+          </div>
+          </div>
+          </div>
+     
+         
+                
+        
+         
+          </div>
+        </div>
+      </div>
+
+
+
+
+</div>   
+</div>
+ <div class="fixed-action-btn horizontal click-to-toggle">
+    <a class="btn-floating btn-large light-blue darken-3">
+      <i class="material-icons">menu</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+      <li><a class="btn-floating red" href="#login">Log-in</a></li>
+      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+  </div>
+
+  <footer class="page-footer light-blue darken-4">
+        <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="black-text">Solar G</h5>
+          <p class="black-text">Solar G. Development of a Real-Time Energy Monitoring System for a Hybrid Solar Power System with Integrated Power Prediction. </p><p class="grey-text text-darken-4">Ateneo de Manila University.</p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="black-text">Contacts</h5>
+          <ul>
+            <li><a class="black-text" href="mailto:julius.sambo@obf.ateneo.edu">ampsSolarEnergy@obf.ateneo.edu</a></li>
+            <li><a class="black-text" href="fb.com/solarg">fb.com/SolarG</a></li>
+            <li><a class="black-text" href="twitter.com/ateneodemanilau">@SolarGph</a></li>
+           
+          </ul>
+        </div>
+        
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      <a class="orange-text text-lighten-3" href="http://materializecss.com">JS2017V2</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script>
+   $(document).ready(function () {
+       $('.slider').slider({full_width: true});
+   });
+</script>
+  <script src={% static 'webapp/images/css/materialize.js' %}>></script>
+  <script src={% static 'webapp/images/css/init.js' %}></script>
+
+  </body>
+</html>
