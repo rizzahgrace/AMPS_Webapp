@@ -6,7 +6,7 @@ import csv
 
 
 def handle_upload_file(f, owner):
-	dataReader=csv.reader(f.read().decode().splitlines(), delimiter=',', quotechar='"')
+	dataReader=csv.reader(f.read().decode('latin-1').splitlines(), delimiter=',', quotechar='"')
 	for row in dataReader:
 		datacsvweather=RawData_Weather()
 		datacsvamps = RawData_AMPS()
@@ -27,7 +27,7 @@ def handle_upload_file(f, owner):
 		except(ValueError):
 			datacsvamps.SP_curr = None
 		try:
-			datacsvamps.SP_pow = (float(row[4])
+			datacsvamps.SP_pow = float(row[4])
 		except(ValueError):
 			datacsvamps.SP_pow = None
 		try:
@@ -59,7 +59,7 @@ def handle_upload_file(f, owner):
 		except(ValueError):
 			datacsvweather.rainin = None
 		try:
-			datacsvweather.dailyrainin = float(row[12)
+			datacsvweather.dailyrainin = float(row[12])
 		except(ValueError):
 			datacsvweather.dailyrainin = None
 		try:
