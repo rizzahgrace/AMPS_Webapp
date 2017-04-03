@@ -90,26 +90,20 @@
                           <div class="row">
                 <div class="input-field col s12">
                  <div id="login">
-        <form class="form-horizontal" name="LoginForm" action="/login/" method="post">
-        {% csrf_token %}
-        {% if next %}
-            <input type="hidden" name="next" value="{{ next }}" />
-        {% endif %}
-        <div class="control-group">
-            <label class="control-label" for="username">Username</label>
-            <div class="controls">
-                <input type="text" id="username" name="username"  placeholder="Username">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="password">Password</label>
-            <div class="controls">
-                <input type="password" name="password" id="password" placeholder="Password">
-            </div>
-        </div>
-        <div class="control-group">
-            <div class="controls">
-                <button type="submit" class="btn">Login</button>
+                  <form method="post" action="{%url 'webapp:login'%}">
+                    {%csrf_token%}
+                    <table>
+                      <tr>
+                        <td> {{form.username.label_tag}}</td>
+                        <td> {{form.username}}</td>
+                      </tr>
+                       <tr>
+                        <td> {{form.password.label_tag}}</td>
+                        <td> {{form.password}}</td>
+                      </tr>
+                    </table>
+                    <input type ="submit" value="login"/>
+                    <input type ="hidden" name="next" value="{%url 'webapp:home'%}"/>
             </div>
         </div>
         </form>
