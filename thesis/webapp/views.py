@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response,HttpResponseRedirect
 from django.template import RequestContext
+from django.db.models import Count, Avg
 
 
 # Create your views here.
@@ -50,10 +51,6 @@ def register(request):
 			email=user_form.cleaned_data['email'],
 			first_name=user_form.cleaned_data['first_name'],
 			last_name=user_form.cleaned_data['last_name']
-
-
-
-
 			)
 	else:
 		user_form = recordUser()
@@ -78,7 +75,7 @@ def test_display_historical(request):
 	# processed_data = RawData_Weathe r.objects.filter(timestamp=).aggregate(Avg('load'))
 	return render(request, 'webapp/index.html')#, processed_data)
 
-class AdvancedGraph(HighChartsMultiAxesView):
+class WeatherGraph(HighChartsMultiAxesView):
 	title = 'Weather Data'
 	subtitle = ''
 	chart_type = ''
@@ -93,7 +90,7 @@ class AdvancedGraph(HighChartsMultiAxesView):
 
 	def get_data(self):
 		data = {'id': [], 'windspeedmph': [], 'temperature':[], 'timestamp':[]}
-		f = RawData_Weather.objects.all()
+		f = RawData_Weather.objects.all().order_by('-id')[:10][::-1]
 		for unit in f:
 			data['id'].append(unit.id)
 			data['timestamp'].append(unit.timestamp.strftime('%I:%M'))
@@ -152,7 +149,7 @@ class PowerGraph(HighChartsMultiAxesView):
 	def get_data(self):
 		data = {'id': [], 'load': [], 'SP_pow':[], 'timestamp':[]}
 		# f = RawData_AMPS.objects.filter(owner = User.objects.get(username=self.request.user))[:10]
-		f = RawData_AMPS.objects.filter(owner = User.objects.get(username='rizzah'))[:10]
+		f = RawData_AMPS.objects.filter(owner = User.objects.get(username='rizzah')).order_by('-id')[:10][::-1]
 		for unit in f:
 			data['id'].append(unit.id)
 			data['timestamp'].append(unit.timestamp.strftime('%I:%M'))
@@ -192,3 +189,61 @@ class PowerGraph(HighChartsMultiAxesView):
 		self.series = self.serie
 		data = super(PowerGraph, self).get_data()
 		return data
+
+class HourlyPower(HighChartsMultiAxesView):
+	title = 'Power'
+	subtitle = ''
+	chart_type = ''
+	chart = {'zoomType': 'xy'}
+	tooltip = {'shared': 'true'}
+	legend = {
+		'layout': 'vertical',
+		'align': 'left',
+		'verticalAlign': 'top',
+		'y': 30
+	}
+
+
+	def get_data(self):
+		data = {'id': [], 'load': [], 'SP_pow':[], 'timestamp':[]}
+		# f = RawData_AMPS.objects.filter(owner = User.objects.get(username=self.request.user))[:10]
+		f = RawData_AMPS.objects.filter(owner = User.objects.get(username='rizzah')).aggregate(Avg('SP_pow'))
+		for unit in f:
+			data['id'].append(unit.id)
+			data['timestamp'].append(unit.timestamp.strftime('%I:%M'))
+			data['load'].append(unit.load)
+			data['SP_pow'].append(unit.SP_pow)
+
+
+		self.categories = data['timestamp']
+		
+		self.yaxis = {
+			'title': {
+				'text': 'Title 1'
+			},
+			'plotLines': [
+				{
+					'value': 0,
+					'width': 1,
+					'color': '#808080'
+				}
+			]
+		}
+		self.serie = [
+			{
+			'name': 'Load',
+			'data': data['load']
+			},
+			{
+			'name': 'Power Generated',
+			'data': data['SP_pow']
+			} 
+		]
+
+		##### X LABELS
+		# self.axis = data['id']
+		
+		##### SERIES WITH VALUES
+		self.series = self.serie
+		data = super(PowerGraph, self).get_data()
+		return datav

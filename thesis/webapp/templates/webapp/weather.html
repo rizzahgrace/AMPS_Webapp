@@ -53,7 +53,7 @@
 
     <script type="text/javascript">
     (function ($) {
-        $.getJSON("{% url 'webapp:dbbar' %}", function(data) {
+        $.getJSON("{% url 'webapp:weatherbar' %}", function(data) {
         $('#chart_container').highcharts(data);
         });
     })(jQuery);
