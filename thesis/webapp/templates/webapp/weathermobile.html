@@ -1,5 +1,3 @@
-{% load static %}
-{% load highcharts_tags %}
 <!DOCTYPE html>
 <!---THIS ONE-->
 <html lang="en">
@@ -7,30 +5,28 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
   <title>Solar Energy Guide</title>
-<!--   https://imgur.com/a/i4ohB
- -->
+
   <!-- CSS  -->
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href={% static 'webapp/css/materialize.css' %} type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href={% static 'webapp/css/style.css' %}type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans|PT+Sans|Roboto+Condensed|Oswald" rel="stylesheet">
-  <link href={% static 'webapp/css/my.css' %} type="text/css" rel="stylesheet" media="screen,projection"/>
- <script  src = {% static 'webapp/css/script.js' %}></script>
+  <link href="css/my.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+ <script  src = "script.js"></script>
  <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenLite.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineLite.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js"></script>
+<script src="dist/scrollissimo.min.js"></script>
+  <script src='prefixfree.min.js'></script>
 <script src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
-<script src = {% static 'webapp/css/jquery.scrollme.js' %}></script>
-<link rel="stylesheet" href={% static 'webapp/css/font-awesome.min.css' %}>
+<script src = "jquery.scrollme.js"></script>
+  <link rel="stylesheet" href="style.css" media="screen">
+      <link rel="stylesheet" href="/css/font-awesome.min.css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<link href={% static 'webapp/css/animate.css' %} type="text/css" rel="stylesheet" media="screen,projection"/>
-<script src="https://use.fontawesome.com/af9dfbaac1.js"></script>
-  <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
-
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+<script src="js/jquery.scrollme.js"></script>
+  <link rel="stylesheet" href="css/animate.min.css">
+  <link href="css/animate.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 
@@ -38,21 +34,131 @@
 
 <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
 <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
-<link href={% static 'webapp/css/font-awesome.css' %} type="text/css" rel="stylesheet" media="screen,projection"/>
-<!-- for the graph -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script src="http://code.highcharts.com/highcharts.js"></script>
-  <script src="http://code.highcharts.com/modules/exporting.js"></script>
+      <link href="css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+            <link href="css/font-awesome.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+            
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+   <script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script type="text/javascript" src="https://www.amcharts.com/lib/3/serial.js"></script>
 
+
+
+    <!-- amCharts javascript code -->
     <script type="text/javascript">
-    (function ($) {
-        $.getJSON("{% url 'webapp:dbbar' %}", function(data) {
-        $('#chart_container').highcharts(data);
-        });
-    })(jQuery);
+      AmCharts.makeChart("chartdiv",
+        {
+          "type": "serial",
+          "categoryField": "date",
+          "dataDateFormat": "YYYY-MM-DD HH",
+          "categoryAxis": {
+            "minPeriod": "hh",
+            "parseDates": true
+          },
+          "chartCursor": {
+            "enabled": true,
+            "categoryBalloonDateFormat": "JJ:NN"
+          },
+          "chartScrollbar": {
+            "enabled": true
+          },
+          "trendLines": [],
+          "graphs": [
+            {
+              "id": "AmGraph-4",
+              "tabIndex": 2,
+              "title": "Temperature(Celsius)",
+              "valueField": "Temperature (Celsius)"
+            },
+            {
+              "id": "AmGraph-5",
+              "title": "Rainfall (mm/h)",
+              "valueField": "Rainfall (mm/hour)"
+            },
+            {
+              "id": "AmGraph-6",
+              "title": "Wind Speed (kph)",
+              "valueField": "Wind Speed (KPH)"
+            },
+            {
+              "id": "AmGraph-7",
+              "title": "Humidity (%)",
+              "valueField": "Humidity (%)"
+            }
+          ],
+          "guides": [],
+          "valueAxes": [
+            {
+              "id": "ValueAxis-1",
+              "title": "="
+            }
+          ],
+          "allLabels": [],
+          "balloon": {},
+          "legend": {
+            "enabled": true,
+            "useGraphSettings": true
+          },
+          "titles": [
+            {
+              "id": "Title-1",
+              "size": 15,
+              "text": " "
+            }
+          ],
+          "dataProvider": [
+            {
+              "date": "2014-03-01 08",
+              "Temperature (Celsius)": "29.5",
+              "Rainfall (mm/hour)": "0",
+              "Wind Speed (KPH)": 7,
+              "Humidity (%)": 51
+            },
+            {
+              "date": "2014-03-01 09",
+              "Temperature (Celsius)": "29.4",
+              "Rainfall (mm/hour)": "0",
+              "Wind Speed (KPH)": 8,
+              "Humidity (%)": 26
+            },
+            {
+              "date": "2014-03-01 10",
+              "Temperature (Celsius)": "29.2",
+              "Rainfall (mm/hour)": "0.10",
+              "Wind Speed (KPH)": 10,
+              "Humidity (%)": 43
+            },
+            {
+              "date": "2014-03-01 11",
+              "Temperature (Celsius)": "29.5",
+              "Rainfall (mm/hour)": "0.15",
+              "Wind Speed (KPH)": 10,
+              "Humidity (%)": 35
+            },
+            {
+              "date": "2014-03-01 12",
+              "Temperature (Celsius)": "29.6",
+              "Rainfall (mm/hour)": "0.25",
+              "Wind Speed (KPH)": 10,
+              "Humidity (%)": 42
+            },
+            {
+              "date": "2014-03-01 13",
+              "Temperature (Celsius)": "29.8",
+              "Rainfall (mm/hour)": "1",
+              "Wind Speed (KPH)": 7,
+              "Humidity (%)": 44
+            },
+            {
+              "date": "2014-03-01 14",
+              "Temperature (Celsius)": 30,
+              "Rainfall (mm/hour)": "1.5",
+              "Wind Speed (KPH)": 9,
+              "Humidity (%)": 35
+            }
+          ]
+        }
+      );
     </script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
 <body bgcolor = "#eeeeee">
@@ -61,7 +167,7 @@
   <div class = "navbar-fixed">
   <nav class=" light-blue darken-4" role="navigation">
     <div class="nav-wrapper container">
-      <a id="logo-container" href="home.html" class="brand-logo left">
+      <a id="logo-container" href="mainSolarStyle.html" class="brand-logo left">
       
       <!--<span class = "white-text thin condensed-light "> -->
       <font face = "PT Sans Narrow" class = "flow-text">
@@ -75,7 +181,7 @@
       </ul>
       <ul class="right hide-on-med-and-down">
         <li>
-          <a href="home.html">
+          <a href="index.html">
 
               <script type="text/javascript">
                 
@@ -110,33 +216,33 @@
           </li>
       </ul>
 
-      <ul id="nav-mobile" class="side-nav">
-        <li><a href="#"><img src={% static 'webapp/images/sol0.png' %}></a></li>
+      <!-- <ul id="nav-mobile" class="side-nav">
+        <li><a href="#"><img src="sol0.png"></a></li>
       </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i> --></a>
     </div>
   </nav>
   </div>
 <div class = "container">
    <div class="row">
    <div class = "col s12"> <br><br> </div>
-    <div class = "col s6 animated zoomIn ">
+    <div class = "col s12 m6 l6 animated zoomIn ">
     <font face= "PT Sans">
     <center>
-    <br>
-    <br>
-    <h4>
-    The Weather Station - CTC Building </h4>
+    
+    <h4 class = "flow-text">
+    The Weather Station - PLDT CTC Building </h4>
 <br>
-The Weather Station is an installment located in the PLDT-CTC Building of the Ateneo de manila University.
-It can measure rainfall, humidity, wind speed, wind direction, and solar irradiance.
+The Weather Station is a set-up that used to be located in Faura Hall, Ateneo de Manila University.
+It now currently resides in PLDT - CTC. 
+It can measure rainfall, humidity, wind speed, wind direction, and temperature.
     </center>
     </div>
-    <div class = "col s6">
+    <!-- <div class = "col s6">
     <center>
-    <img src = {% static 'webapp/images/temp.png' %} class = "responsive-img animated zoomIn">
+    <img src = "temp.png" class = "responsive-img animated zoomIn">
     </center>
-    </div>
+    </div> -->
       
     <!--   <div class = "col s12"><br></div>
       <font face = "PT Sans">
@@ -158,11 +264,11 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
         
       </i>
       <font face = "Open Sans" size="15">
-        {{data.tempf|floatformat:2}}
-        <!-- 26° -->
+        
+        26°
         </font>
       <br>
-       Temperature (°)
+       Temperature
       </center>
         </div>
         </div>
@@ -176,11 +282,11 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
       </i>
       <font face = "Open Sans" size="15">
         
-        {{data.rainin}}
+        2mm
         
         </font>
       <br>
-       Rain Fall (mm)
+       Rain Fall
       </center>
         </div>
         </div>
@@ -193,10 +299,10 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
         
       </i>
       <font face = "Open Sans" size="10">
-        {{data.windspeedmph|floatformat:1}}
+        18k
         </font>
       <br>
-       Wind Speed (kph)
+       Wind Speed
       </center>
         </div>
         </div>
@@ -210,10 +316,10 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
         
       </i>
       <font face = "Open Sans" size="12">
-        {{data.humidity}}
+        52%
         </font>
       <br>
-       Humidity (%)
+       Humidity
       </center>
         </div>
         </div>
@@ -221,21 +327,19 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
        <div class="col s12">
       <div class = "card white animated slideInUp">
           <div class = "card-content gray-text">
-             <div id="chart_container" style="width: 100%; height: 400px;" ></div>      
+             <div id="chartdiv" style="width: 100%; height: 400px;" ></div>      
           </div>
         </div>
       </div>
-
-
-      <div class = "col s12">
+<div class = "col s12">
 <center>
-<font face = "PT Sans">
+<font face = "PT Sans" class = "flow-text">
 <h4> <i>How weather affects solar output:</i></h4>
 </font>
 </center>
 </div>
 
-<div class = "col s4">
+<div class = "col s12 m4 l4">
 
 
   <ul class="collapsible popout" data-collapsible="expandable">
@@ -244,10 +348,12 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
       <div class="collapsible-body"><span>
       <center>
       <br>
+      <font class = "flow-text">
       Rainfall affects solar power output drastically. 
       Since rain is connected with cloud coverage, the solar panels receive little amount of sunlight.
       This affects the power production for the day.  [1]
       <br>
+      </font>
        &nbsp;
       </center>
       </span></div>
@@ -282,7 +388,7 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
 
 </div>
 
-<div class = "col s4">
+<div class = "col s12 m4 l4">
 
 
   <ul class="collapsible popout" data-collapsible="expandable">
@@ -325,7 +431,7 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
 
 
 </div>
-<div class = "col s4">
+<div class = "col s12 m4 l4">
 
      <ul class="collapsible popout" data-collapsible="expandable">
     <li>
@@ -354,7 +460,9 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
      <br>
      <a href="http://www.accuweather.com/en/ph/philippines-weather">AccuWeather</a>
      <br>
-     <a href="http://www.metroweather.com.ph/">MetroWeather by Manila Observatory</a>
+   
+     <a title = "Manila Observatory" href="http://www.metroweather.com.ph/">MetroWeather by Manila Observatory</a>
+    
      <br>
      <a href="https://www.wunderground.com/">Wunderground</a>
       <br>
@@ -376,17 +484,83 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
     </li>
   </ul>
 </div>
-<!-- <div class = "col s12">
-<center>
-<font face = "PT Sans">
-<h4> <i>How weather affects solar output:</i></h4>
-</font>
-</center>
+<div class = "col s12">
+
+<!-- <div class = "card white">
+          <div class = "card-content gray-text">
+          <center>
+          <h5> Meteo.com Weather Data and Forecast Comparison</h5>
+          <iframe src="https://www.meteoblue.com/en/weather/widget/three/quezon-city_philippines_1692192?geoloc=fixed&nocurrent=0&noforecast=0&days=7&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&layout=monochrome"  frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style="width: 805px;height: 622px"></iframe><div>
+          </center>
+          </div>
+          </div>
+
+</div>
+ -->
+<!-- <div class = "col s12 m3 l3">
+       <div class="card">
+    <div class="card-image waves-effect waves-block waves-light">
+      <img class="activator" src="rain.png">
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4"><center>Rainfall<i class="material-icons right">more_vert</i></center></span>
+      
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">Raindall<i class="material-icons right">close</i></span>
+      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+    </div>
+  </div>
+</div> -->
+<!-- <div class = "col s12  m3 l3">
+       <div class="card">
+    <div class="card-image waves-effect waves-block waves-light">
+      <img class="activator" src="windmill.png">
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4"><center>Wind Speed<i class="material-icons right">more_vert</i></center></span>
+      
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">Wind Speed<i class="material-icons right">close</i></span>
+      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+    </div>
+  </div>
+</div> -->
+<!-- <div class = "col s12  m3 l3">
+       <div class="card">
+    <div class="card-image waves-effect waves-block waves-light">
+      <img class="activator" src="money-bag.png">
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4"><center>Temperature<i class="material-icons right">more_vert</i></center></span>
+     
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">Temperature<i class="material-icons right">close</i></span>
+      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+    </div>
+  </div>
+</div>
+<div class = "col s12  m3 l3">
+       <div class="card">
+    <div class="card-image waves-effect waves-block waves-light">
+      <img class="activator" src="trophy.png">
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4"><center>Irradiance<i class="material-icons right">more_vert</i></center></span>
+   
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+    </div>
+  </div>
 </div>
 <div class = "col s12 m3 l3">
        <div class="card">
     <div class="card-image waves-effect waves-block waves-light">
-      <img class="activator" src={% static 'webapp/images/rain.png' %}>
+      <img class="activator" src="rain.png">
     </div>
     <div class="card-content">
       <span class="card-title activator grey-text text-darken-4"><center>Rainfall<i class="material-icons right">more_vert</i></center></span>
@@ -431,7 +605,7 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
 <div class = "col s12  m3 l3">
        <div class="card">
     <div class="card-image waves-effect waves-block waves-light">
-      <img class="activator" src={% static 'webapp/images/trophy.png' %}>
+      <img class="activator" src="trophy.png">
     </div>
     <div class="card-content">
       <span class="card-title activator grey-text text-darken-4"><center>Irradiance<i class="material-icons right">more_vert</i></center></span>
@@ -442,67 +616,7 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
       <p>Here is some more information about this product that is only revealed once clicked on.</p>
     </div>
   </div>
-</div>
-<div class = "col s12 m3 l3">
-       <div class="card">
-    <div class="card-image waves-effect waves-block waves-light">
-      <img class="activator" src={% static 'webapp/images/rain.png' %}>
-    </div>
-    <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4"><center>Rainfall<i class="material-icons right">more_vert</i></center></span>
-      
-    </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4">Raindall<i class="material-icons right">close</i></span>
-      <p>Here is some more information about this product that is only revealed once clicked on.</p>
-    </div>
-  </div>
-</div>
-<div class = "col s12  m3 l3">
-       <div class="card">
-    <div class="card-image waves-effect waves-block waves-light">
-      <img class="activator" src={% static 'webapp/images/windmill.png' %}>
-    </div>
-    <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4"><center>Wind Speed<i class="material-icons right">more_vert</i></center></span>
-      
-    </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4">Wind Speed<i class="material-icons right">close</i></span>
-      <p>Here is some more information about this product that is only revealed once clicked on.</p>
-    </div>
-  </div>
-</div>
-<div class = "col s12  m3 l3">
-       <div class="card">
-    <div class="card-image waves-effect waves-block waves-light">
-      <img class="activator" src={% static 'webapp/images/money-bag.png' %}>
-    </div>
-    <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4"><center>Temperature<i class="material-icons right">more_vert</i></center></span>
-     
-    </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4">Temperature<i class="material-icons right">close</i></span>
-      <p>Here is some more information about this product that is only revealed once clicked on.</p>
-    </div>
-  </div>
-</div>
-<div class = "col s12  m3 l3">
-       <div class="card">
-    <div class="card-image waves-effect waves-block waves-light">
-      <img class="activator" src={% static 'webapp/images/trophy.png' %}>
-    </div>
-    <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4"><center>Irradiance<i class="material-icons right">more_vert</i></center></span>
-   
-    </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-      <p>Here is some more information about this product that is only revealed once clicked on.</p>
-    </div>
-  </div>
-</div>
+</div> -->
 <!--
       <div class="col s12">
       <div class = "card green accent-2">
@@ -532,8 +646,8 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
       </div> 
     </div>
     </div>
- --> -->
-      <div class="col s12">
+ -->
+     <!--  <div class="col s12">
       <div class = "card white">
           <div class = "card-content gray-text">
           <center>
@@ -542,7 +656,7 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
           </center>
           </div>
           </div>
-          </div>
+          </div> -->
      
          
                 
@@ -569,6 +683,7 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
       <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
     </ul>
   </div>
+
 
   <footer class="page-footer light-blue darken-4">
         <div class="container">
@@ -606,8 +721,8 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
        $('.slider').slider({full_width: true});
    });
 </script>
-  <script src={% static 'webapp/images/css/materialize.js' %}>></script>
-  <script src={% static 'webapp/images/css/init.js' %}></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
 
   </body>
 </html>

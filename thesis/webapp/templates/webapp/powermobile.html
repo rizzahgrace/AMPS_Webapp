@@ -59,10 +59,10 @@
   <div class = "navbar-fixed">
   <nav class=" light-blue darken-4" role="navigation">
     <div class="nav-wrapper container">
-      <a id="logo-container" href="home.html" class="brand-logo left">
+      <a id="logo-container" href="mainSolarStyle.html" class="brand-logo left">
       
       <!--<span class = "white-text thin condensed-light "> -->
-      <font face = "PT Sans Narrow" class = "flow-text">
+      <font face = "PT Sans Narrow" class="flow-text">
       Analytics Monitoring for Power Systems</a></span></font>
       <ul class="left hide-on-med-and-down">
         <li>
@@ -73,7 +73,7 @@
       </ul>
       <ul class="right hide-on-med-and-down">
         <li>
-          <a href="home.html">
+          <a href="index.html">
 
               <script type="text/javascript">
                 
@@ -108,34 +108,35 @@
           </li>
       </ul>
 
-      <ul id="nav-mobile" class="side-nav">
+      <!-- <ul id="nav-mobile" class="side-nav">
         <li><a href="#"><img src={% static 'webapp/images/sol0.png' %}></a></li>
       </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a> -->
     </div>
   </nav>
   </div>
 <div class = "container">
    <div class="row">
    <div class = "col s12"> <br><br> </div>
-    <div class = "col s6 animated zoomIn ">
-    <font face= "PT Sans">
+    <div class = "col s12 animated zoomIn ">
+    <font face= "PT Sans" class = "flow-text">
     <center>
-    <br>
-    <br>
     <h4>
     Power Monitoring and Prediction </h4>
 <br>
 The Power Monitoring and Prediction System is a something something located in Faura Hall, Ateneo de manila University.
 It can measure rainfall, humidity, wind speed, wind direction, and solar irradiance.
+<br>
+&nbsp;
+<br>
     </center>
     </div>
-    <div class = "col s6">
+    <!-- <div class = "col s6">
     <center>
     <img src = {% static 'webapp/images/temp.png' %} class = "responsive-img animated zoomIn">
     </center>
     </div>
-      
+       -->
   <ul id="tabs-swipe-demo" class="tabs">
     <li class="tab col s3"><a href="#test-swipe-1">Daily</a></li>
     <li class="tab col s3"><a class="active" href="#test-swipe-2">Weekly</a></li>
@@ -157,7 +158,7 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
       </i>
       <font face = "Open Sans" size="10">
         
-        {{data.SP_pow}} Wh
+        {{data.SP_pow}}
         </font>
      
       <br>
@@ -175,7 +176,7 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
       </i>
       <font face = "Open Sans" size="10">
         
-        {{data.load}} Wh
+        {{data.load}}
         
         </font>
       
