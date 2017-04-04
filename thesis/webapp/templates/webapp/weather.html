@@ -158,7 +158,7 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
         
       </i>
       <font face = "Open Sans" size="15">
-        {{data.tempf}}
+        {{data.tempf|floatformat:2}}
         <!-- 26° -->
         </font>
       <br>
@@ -193,7 +193,7 @@ It can measure rainfall, humidity, wind speed, wind direction, and solar irradia
         
       </i>
       <font face = "Open Sans" size="10">
-        {{data.windspeedmph}}
+        {{data.windspeedmph|floatformat:1}}
         </font>
       <br>
        Wind Speed
