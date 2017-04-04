@@ -27,8 +27,8 @@ def weather(request):
 	return render(request, 'webapp/weather.html', {"data":data})
 
 def power(request):
-	# data = RawData_AMPS.objects.filter(owner = User.request.user).last()
-	return render(request, 'webapp/power1.html')
+	data = RawData_AMPS.objects.filter(owner = request.user).last()
+	return render(request, 'webapp/power1.html', {"data":data})
 
 def csv(request):
 	if request.method == 'POST':
@@ -79,7 +79,7 @@ def test_display_historical(request):
 	return render(request, 'webapp/index.html')#, processed_data)
 		
 class AdvancedGraph(HighChartsMultiAxesView):
-	title = 'Example Data Chart'
+	title = 'Weather Data'
 	subtitle = ''
 	chart_type = ''
 	chart = {'zoomType': 'xy'}
@@ -92,20 +92,22 @@ class AdvancedGraph(HighChartsMultiAxesView):
 	}
 
 	def get_data(self):
-		data = {'id': [], 'windspeedmph': [], 'temperature':[], 'timestamp':[]}
+		data = {'id': [], 'windspeedmph': [], 'temperature':[], 'timestamp':[], 'rainin':[], 'humidity':[]}
 		f = RawData_Weather.objects.all().order_by('-id')[:10][::-1]
 		for unit in f:
 			data['id'].append(unit.id)
-			data['timestamp'].append(unit.timestamp.strftime('%I:%M'))
+			data['timestamp'].append(unit.timestamp.strftime('%I:%M %p'))
 			data['windspeedmph'].append(unit.windspeedmph)
 			data['temperature'].append(unit.tempf)
+			data['rainin'].append(unit.rainin)
+			data['humidity'].append(unit.humidity)
 
 
 		self.categories = data['timestamp']
 		 	
 		self.yaxis = {
 			'title': {
-				'text': 'Title 1'
+				'text': ''
 			},
 			'plotLines': [
 				{
@@ -117,13 +119,22 @@ class AdvancedGraph(HighChartsMultiAxesView):
 		}
 		self.serie = [
 			{
-			'name': 'windspeedmph',
-			'data': data['windspeedmph']
+			'name': 'Humidty',
+			'data': data['humidity']
 			},
 			{
-			'name': 'temperature',
+			'name': 'Rainfall',
+			'data': data['rainin']
+			},
+			{
+			'name': 'Temperature',
 			'data': data['temperature']
-			} 
+			},
+			{
+			'name': 'Wind Speed',
+			'data': data['windspeedmph']
+			}
+
 		]
 
 		##### X LABELS
@@ -155,7 +166,7 @@ class PowerGraph(HighChartsMultiAxesView):
 		# f = RawData_AMPS.objects.filter(owner = User.objects.get(username='rizzah')).order_by('-id')[:10][::-1]
 		for unit in f:
 			data['id'].append(unit.id)
-			data['timestamp'].append(unit.timestamp.strftime('%I:%M'))
+			data['timestamp'].append(unit.timestamp.strftime('%I:%M %p'))
 			data['load'].append(unit.load)
 			data['SP_pow'].append(unit.SP_pow)
 
