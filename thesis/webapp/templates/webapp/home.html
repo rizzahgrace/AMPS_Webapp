@@ -373,13 +373,23 @@ because you deserve only the best.  <br>
             <div class="card-content black-text">
               
                           <div class="row">
-                <h2>Login</h2>
-      <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <center>
-              <a class="waves-effect waves-light light-blue darken-3 btn" href = '/webapp/home'>Log-In</a>
-            </center>
+                <div class="input-field col s12">
+                 <div id="login">
+                  <form method="post" action="{%url 'webapp:login'%}">
+                    {%csrf_token%}
+                    <table>
+                      <tr>
+                        <td> {{form.username.label_tag}}</td>
+                        <td> {{form.username}}</td>
+                      </tr>
+                       <tr>
+                        <td> {{form.password.label_tag}}</td>
+                        <td> {{form.password}}</td>
+                      </tr>
+                    </table>
+                    <input type ="submit" value="login"/>
+                    <input type ="hidden" name="next" value="{%url 'webapp:home'%}"/>
+            </div>
   </form>
                 </div>
               </div>
@@ -450,7 +460,7 @@ because you deserve only the best.  <br>
         </center>
 
 <center>
-              <a class="waves-effect waves-orange light-blue darken-3 btn" href = "register">Register</a>
+              <a class="waves-effect waves-orange light-blue darken-3 btn" href = "{%url 'webapp:register'%}">Register</a>
             </center>
 
         </div>

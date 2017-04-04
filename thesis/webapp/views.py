@@ -10,8 +10,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render_to_response,HttpResponseRedirect
 from django.template import RequestContext
-from django.db.models import Count, Avg
-
+from django.db.models import Count, Avg, DateTimeField	
+from django.db.models.functions import Trunc
 
 # Create your views here.
 
@@ -147,13 +147,13 @@ class PowerGraph(HighChartsMultiAxesView):
 
 
 	def get_data(self):
-		data = {'id': [], 'load': [], 'SP_pow':[], 'timestamp':[]}
-		# f = RawData_AMPS.objects.filter(owner = User.objects.get(username=self.request.user))[:10]
-		f = RawData_AMPS.objects.filter(owner = User.objects.get(username='rizzah')).order_by('-id')[:10][::-1]
+		data = {'id': [], 'grid': [], 'SP_pow':[], 'timestamp':[]}
+		f = RawData_AMPS.objects.filter(owner = User.objects.get(username=self.request.user)).order_by('-id')[:10][::-1]
+		# f = RawData_AMPS.objects.filter(owner = User.objects.get(username='rizzah')).order_by('-id')[:10][::-1]
 		for unit in f:
 			data['id'].append(unit.id)
 			data['timestamp'].append(unit.timestamp.strftime('%I:%M'))
-			data['load'].append(unit.load)
+			data['grid'].append(unit.grid)
 			data['SP_pow'].append(unit.SP_pow)
 
 
@@ -173,8 +173,8 @@ class PowerGraph(HighChartsMultiAxesView):
 		}
 		self.serie = [
 			{
-			'name': 'Load',
-			'data': data['load']
+			'name': 'Grid',
+			'data': data['grid']
 			},
 			{
 			'name': 'Power Generated',
@@ -205,14 +205,15 @@ class HourlyPower(HighChartsMultiAxesView):
 
 
 	def get_data(self):
-		data = {'id': [], 'load': [], 'SP_pow':[], 'timestamp':[]}
+		# data = {'id': [], 'load': [], 'SP_pow':[], 'timestamp':[]}
+		data = {'load': [], 'timestamp':[]}
 		# f = RawData_AMPS.objects.filter(owner = User.objects.get(username=self.request.user))[:10]
-		f = RawData_AMPS.objects.filter(owner = User.objects.get(username='rizzah')).aggregate(Avg('SP_pow'))
+		f = RawData_AMPS.objects.filter(owner = User.objects.get(username='julius')).annotate(start_day=Trunc('timestamp', 'day', output_field=DateTimeField())).values('start_day').aggregate(load_day=Avg('load'))
 		for unit in f:
-			data['id'].append(unit.id)
-			data['timestamp'].append(unit.timestamp.strftime('%I:%M'))
-			data['load'].append(unit.load)
-			data['SP_pow'].append(unit.SP_pow)
+			# data['id'].append(unit.id)
+			data['timestamp'].append(unit.start_day)
+			data['load'].append(unit.load_day)
+			# data['SP_pow'].append(unit.SP_pow)
 
 
 		self.categories = data['timestamp']
@@ -233,11 +234,11 @@ class HourlyPower(HighChartsMultiAxesView):
 			{
 			'name': 'Load',
 			'data': data['load']
-			},
-			{
-			'name': 'Power Generated',
-			'data': data['SP_pow']
-			} 
+			}
+			# {
+			# 'name': 'Power Generated',
+			# 'data': data['SP_pow']
+			# } 
 		]
 
 		##### X LABELS
@@ -245,5 +246,5 @@ class HourlyPower(HighChartsMultiAxesView):
 		
 		##### SERIES WITH VALUES
 		self.series = self.serie
-		data = super(PowerGraph, self).get_data()
-		return datav
+		data = super(HourlyPower, self).get_data()
+		return data
