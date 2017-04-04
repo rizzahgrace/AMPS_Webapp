@@ -92,7 +92,7 @@ class AdvancedGraph(HighChartsMultiAxesView):
 	}
 
 	def get_data(self):
-		data = {'id': [], 'windspeedmph': [], 'temperature':[], 'timestamp':[], 'rainin':[], 'humidity':[]}
+		data = {'id': [], 'windspeedmph': [], 'temperature':[], 'timestamp':[], 'rainin':[], 'humidity':[], 'pressure':[]}
 		f = RawData_Weather.objects.all().order_by('-id')[:10][::-1]
 		for unit in f:
 			data['id'].append(unit.id)
@@ -101,6 +101,7 @@ class AdvancedGraph(HighChartsMultiAxesView):
 			data['temperature'].append(unit.tempf)
 			data['rainin'].append(unit.rainin)
 			data['humidity'].append(unit.humidity)
+			data['pressure'].append(unit.pressure)
 
 
 		self.categories = data['timestamp']
@@ -121,6 +122,10 @@ class AdvancedGraph(HighChartsMultiAxesView):
 			{
 			'name': 'Humidty',
 			'data': data['humidity']
+			},
+			{
+			'name': 'Pressure',
+			'data': data['pressure']
 			},
 			{
 			'name': 'Rainfall',
