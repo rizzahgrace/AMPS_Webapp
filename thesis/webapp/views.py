@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse, Http404
 from webapp.forms import UploadCSVFile, recordUser
 from webapp.utils import handle_upload_file
 from highcharts.views import (HighChartsMultiAxesView, HighChartsStockView)
@@ -22,10 +23,12 @@ def home(request):
 	return render(request, 'webapp/home2.html')
 
 def weather(request):
-	return render(request, 'webapp/weather.html')
+	data = RawData_Weather.objects.last()
+	return render(request, 'webapp/weather.html', {"data":data})
 
 def power(request):
-	return render(request, 'webapp/power.html')
+	# data = RawData_AMPS.objects.filter(owner = User.request.user).last()
+	return render(request, 'webapp/power1.html')
 
 def csv(request):
 	if request.method == 'POST':
@@ -74,9 +77,9 @@ def login_user(request):
 def test_display_historical(request):
 	# processed_data = RawData_Weathe r.objects.filter(timestamp=).aggregate(Avg('load'))
 	return render(request, 'webapp/index.html')#, processed_data)
-
-class WeatherGraph(HighChartsMultiAxesView):
-	title = 'Weather Data'
+		
+class AdvancedGraph(HighChartsMultiAxesView):
+	title = 'Example Data Chart'
 	subtitle = ''
 	chart_type = ''
 	chart = {'zoomType': 'xy'}
@@ -99,7 +102,7 @@ class WeatherGraph(HighChartsMultiAxesView):
 
 
 		self.categories = data['timestamp']
-			
+		 	
 		self.yaxis = {
 			'title': {
 				'text': 'Title 1'
@@ -131,7 +134,7 @@ class WeatherGraph(HighChartsMultiAxesView):
 		self.series = self.serie
 		data = super(AdvancedGraph, self).get_data()
 		return data
-		
+
 class PowerGraph(HighChartsMultiAxesView):
 	title = 'Power'
 	subtitle = ''
@@ -147,13 +150,13 @@ class PowerGraph(HighChartsMultiAxesView):
 
 
 	def get_data(self):
-		data = {'id': [], 'grid': [], 'SP_pow':[], 'timestamp':[]}
+		data = {'id': [], 'SP_pow':[], 'timestamp':[], 'load':[]}
 		f = RawData_AMPS.objects.filter(owner = User.objects.get(username=self.request.user)).order_by('-id')[:10][::-1]
 		# f = RawData_AMPS.objects.filter(owner = User.objects.get(username='rizzah')).order_by('-id')[:10][::-1]
 		for unit in f:
 			data['id'].append(unit.id)
 			data['timestamp'].append(unit.timestamp.strftime('%I:%M'))
-			data['grid'].append(unit.grid)
+			data['load'].append(unit.load)
 			data['SP_pow'].append(unit.SP_pow)
 
 
@@ -173,8 +176,8 @@ class PowerGraph(HighChartsMultiAxesView):
 		}
 		self.serie = [
 			{
-			'name': 'Grid',
-			'data': data['grid']
+			'name': 'Load Consumption',
+			'data': data['load']
 			},
 			{
 			'name': 'Power Generated',
