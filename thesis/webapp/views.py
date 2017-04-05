@@ -13,7 +13,6 @@ from django.shortcuts import render_to_response,HttpResponseRedirect
 from django.template import RequestContext
 from django.db.models import Count, Avg, DateTimeField	
 from django.db.models.functions import Trunc
-from webapp.tasks import power_data
 # Create your views here.
 
 def index(request):
