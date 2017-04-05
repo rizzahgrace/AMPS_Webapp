@@ -28,11 +28,6 @@ def weather(request):
 
 def power(request):
 	data = RawData_AMPS.objects.filter(owner = request.user).last()
-	result_id=power_data(data.id-6)
-	if result_id==RawData_AMPS.objects.filter(owner = request.user).last().id:
-		data = RawData_AMPS.objects.filter(owner = request.user).last()
-	else:
-		data = RawData_AMPS.objects.get(id=result_id)
 	return render(request, 'webapp/power1.html', {"data":data})
 
 def csv(request):
