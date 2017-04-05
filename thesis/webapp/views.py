@@ -48,7 +48,7 @@ def csv(request):
 
 	return render(request, 'webapp/csv.html', {'form': form})
 
-def csv_prediction(request):
+def csvprediction(request):
 	if request.method == 'POST':
 		form = UploadCSVFile(request.POST, request.FILES)	
 		
@@ -59,7 +59,7 @@ def csv_prediction(request):
 	else:
 		form = UploadCSVFile()
 
-	return render(request, 'webapp/csv.html', {'form': form})
+	return render(request, 'webapp/csv_prediction.html', {'form': form})
 
 @csrf_protect
 def register(request):
