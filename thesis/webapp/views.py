@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from webapp.forms import UploadCSVFile, recordUser
-from webapp.utils import handle_upload_file
+from webapp.utils import handle_upload_file, prediction_data
 from highcharts.views import (HighChartsMultiAxesView, HighChartsStockView)
 from .models import RawData_AMPS, RawData_Weather
 from django.views.decorators.csrf import csrf_protect
@@ -42,6 +42,19 @@ def csv(request):
 		if form.is_valid():
 			owner = form.cleaned_data['owner']
 			handle_upload_file(request.FILES['csvfile'], owner)
+			messages.success(request, 'Record saved')
+	else:
+		form = UploadCSVFile()
+
+	return render(request, 'webapp/csv.html', {'form': form})
+
+def csv_prediction(request):
+	if request.method == 'POST':
+		form = UploadCSVFile(request.POST, request.FILES)	
+		
+		if form.is_valid():
+			owner = form.cleaned_data['owner']
+			prediction_data(request.FILES['csvfile'], owner)
 			messages.success(request, 'Record saved')
 	else:
 		form = UploadCSVFile()
