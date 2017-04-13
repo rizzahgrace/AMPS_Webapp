@@ -13,7 +13,6 @@ from django.shortcuts import render_to_response,HttpResponseRedirect
 from django.template import RequestContext
 from django.db.models import Count, Avg, DateTimeField	
 from django.db.models.functions import Trunc
-from webapp.tasks import power_data
 # Create your views here.
 
 def index(request):
@@ -28,11 +27,6 @@ def weather(request):
 
 def power(request):
 	data = RawData_AMPS.objects.filter(owner = request.user).last()
-	result_id=power_data(data.id-6)
-	if result_id==RawData_AMPS.objects.filter(owner = request.user).last().id:
-		data = RawData_AMPS.objects.filter(owner = request.user).last()
-	else:
-		data = RawData_AMPS.objects.get(id=result_id)
 	return render(request, 'webapp/power1.html', {"data":data})
 
 def csv(request):
