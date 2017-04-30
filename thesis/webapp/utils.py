@@ -13,9 +13,9 @@ def prediction_data(f, owner):
 		except(ValueError):
 			dataprediction.measured = None
 		try:
-			dataprediction.prediction = float(row[1])
+			dataprediction.predicted = float(row[1])
 		except(ValueError):
-			dataprediction.prediction = None
+			dataprediction.predicted = None
 		try:
 			dataprediction.time = datetime.datetime.strptime(row[2], '%H:%M')
 		except(ValueError):
