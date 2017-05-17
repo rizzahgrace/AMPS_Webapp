@@ -9,8 +9,8 @@ class RawDataWeatherAdmin(admin.ModelAdmin):
 	list_filter = ['timestamp']
 	
 class RawDataAMPSAdmin(admin.ModelAdmin):
-	fields = ['grid', 'load', 'batt_curr', 'batt_volt', 'SP_curr', 'SP_volt', 'SP_pow', 'timestamp', 'owner']
-	list_display = ('grid', 'load', 'batt_curr', 'batt_volt', 'SP_curr', 'SP_volt', 'SP_pow', 'timestamp', 'owner')
+	fields = ['grid', 'load', 'batt_curr', 'batt_volt', 'SP_curr', 'SP_volt', 'SP_pow', 'measured', 'predicted', 'timestamp', 'owner']
+	list_display = ('grid', 'load', 'batt_curr', 'batt_volt', 'SP_curr', 'SP_volt', 'SP_pow','measured', 'predicted', 'timestamp', 'owner')
 	list_filter = ['timestamp']
 
 admin.site.register(RawData_AMPS, RawDataAMPSAdmin)

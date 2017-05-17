@@ -29,8 +29,7 @@ class RawData_AMPS(models.Model):
 	SP_curr = models.FloatField(null=True)
 	SP_volt = models.FloatField(null=True)
 	SP_pow = models.FloatField(null=True)
+	measured = models.FloatField(null=True)
+	predicted = models.FloatField(null=True)
 	timestamp = models.DateTimeField('date logged', default = now, null=True)
 	owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-
-class AMPS_Preduction(models.Model):
-	

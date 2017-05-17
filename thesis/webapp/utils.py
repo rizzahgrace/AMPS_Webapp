@@ -1,31 +1,8 @@
 #all the commands were run in the python
 import datetime
 from django.contrib import messages
-from .models import RawData_AMPS, RawData_Weather, AMPS_Prediction
+from .models import RawData_AMPS, RawData_Weather
 import csv
-
-def prediction_data(f, owner):
-	dataReader=csv.reader(f.read().decode('latin-1').splitlines(), delimiter=',', quotechar='"')
-	for row in dataReader:
-		dataprediction=AMPS_Prediction()
-		try:
-			dataprediction.measured = float(row[0])
-		except(ValueError):
-			dataprediction.measured = None
-		try:
-			dataprediction.predicted = float(row[1])
-		except(ValueError):
-			dataprediction.predicted = None
-		try:
-			dataprediction.time = datetime.datetime.strptime(row[2], '%H:%M')
-		except(ValueError):
-			dataprediction.time = None
-		try:
-			dataprediction.date = datetime.datetime.strptime(row[3], '%m/%d/%Y')
-		except(ValueError):
-			dataprediction.date = None
-		dataprediction.owner = owner
-		dataprediction.save()
 
 def handle_upload_file(f, owner):
 	dataReader=csv.reader(f.read().decode('latin-1').splitlines(), delimiter=',', quotechar='"')
