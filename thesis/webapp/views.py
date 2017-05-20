@@ -69,7 +69,6 @@ def register(request):
 			)
 	else:
 		user_form = recordUser()
-
 	return render(request, 'webapp/registration.html', {'user_form' : user_form})
 
 def login_user(request):

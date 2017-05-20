@@ -10,9 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
-import os
+import os, djcelery
 from datetime import timedelta
 
+djcelery.setup_loader()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,14 +27,16 @@ SECRET_KEY = '6xtiu3^3%bwd)jz-ykdj-ngig+=vmhfr&tf2#8^8n7eydqfdo4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.33.10', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = []
 
-BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'Africa/Nairobi'
+BROKER_URL = 'django://'
+CELERY_IMPORTS = ('webapp.tasks', )
+# BROKER_URL = 'redis://localhost:6379'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+# CELERY_ACCEPT_CONTENT = ['application/json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TIMEZONE = 'Africa/Nairobi'
 
 # CELERYBEAT_SCHEDULE = {
 #     'test_print': {
@@ -47,6 +50,8 @@ CELERY_TIMEZONE = 'Africa/Nairobi'
 INSTALLED_APPS = [
     'webapp.apps.WebappConfig',
     'highcharts',
+    'kombu.transport.django',
+    'djcelery',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
