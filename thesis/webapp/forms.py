@@ -12,6 +12,23 @@ class UploadCSVFile(forms.Form):
         empty_label='Choose an owner'
     )
 
+class recordWeather(forms.Form):
+    winddir = forms.FloatField(label="Wind Direction", required=True,)
+    windspeedmph = forms.FloatField(label="Wind Speed (mph)", required=True,)
+    windspdmph_avg2m = forms.FloatField(label="Wind Speed (mph) Average", required=True,)
+    rainin = forms.FloatField(label="Rain", required=True,)
+    dailyrainin = forms.FloatField(label="Total Rain", required=True,)
+    humidity = forms.FloatField(label="Humidity", required=True,)
+    pressure = forms.FloatField(label="Pressure", required=True,)
+
+class recordPower(forms.Form)
+    grid = forms.FloatField(label="Grid", required=True,)
+    load = forms.FloatField(label="Load", required=True,)
+    batt_curr = forms.FloatField(label="Battery Current", required=True,)
+    batt_pow = forms.FloatField(label="Battery Power", required=True,)
+    SP_curr = forms.FloatField(label="Solar Panel Current", required=True,)
+    SP_volt = forms.FloatField(label="Solar Panel Voltage", required=True,)
+
 
 class recordUser(forms.Form):
     username = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=True, max_length=30)), label=("Username"), error_messages={ 'invalid': ("This value must contain only letters, numbers and underscores.") })

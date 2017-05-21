@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
-from webapp.forms import UploadCSVFile, recordUser
+from webapp.forms import UploadCSVFile, recordUser, recordWeather
 from webapp.utils import handle_upload_file
 from highcharts.views import (HighChartsMultiAxesView, HighChartsStockView)
 from .models import RawData_AMPS, RawData_Weather
@@ -42,18 +42,31 @@ def csv(request):
 
 	return render(request, 'webapp/csv.html', {'form': form})
 
-# def csvprediction(request):
-# 	if request.method == 'POST':
-# 		form = UploadCSVFile(request.POST, request.FILES)	
-		
-# 		if form.is_valid():
-# 			owner = form.cleaned_data['owner']
-# 			prediction_data(request.FILES['csvfile'], owner)
-# 			messages.success(request, 'Record saved')
-# 	else:
-# 		form = UploadCSVFile()
+def recordWeather(request):
+	if request.method == 'POST':
+		form = recordWeather(request.POST)
 
-# 	return render(request, 'webapp/csv_prediction.html', {'form': form})
+		if form.is_valid():
+			winddir = form.cleaned_data['winddir']
+			windspeedmph = form.cleaned_data['windspeedmph']
+			windspdmph_avg2m = form.cleaned_data['windspdmph_avg2m']
+			rainin = form.cleaned_data['rainin']
+			dailyrainin = form.cleaned_data['dailyrainin']
+			humidity = form.cleaned_data['humidity']
+			pressure = form.cleaned_data['pressure']
+			dt = timezone.now()
+			dt = dt.replace(second=0, microsecond=0)
+			record = RawData_Weather(winddir=winddir, windspeedmph=windspeedmph, windspdmph_avg2m=windspdmph_avg2m, rainin=rainin, dailyrainin=dailyrainin, humidity=humidity, pressure=pressure, timestamp = dt)
+			if (Record.check_time(record)):
+				record.save()
+				messages.success(request, 'Record saved')
+				#return HttpResponseRedirect(reverse('hmain:hmain'))
+			else:
+				messages.error(request, 'Wrong time')
+	else:
+		form = recordWeather()
+
+	return render(request, 'webapp/recordweather.html', {'form': form})
 
 @csrf_protect
 def register(request):
