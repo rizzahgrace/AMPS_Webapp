@@ -38,13 +38,13 @@ CELERY_IMPORTS = ('webapp.tasks', )
 # CELERY_RESULT_SERIALIZER = 'json'
 # CELERY_TIMEZONE = 'Africa/Nairobi'
 
-# CELERYBEAT_SCHEDULE = {
-#     'test_print': {
-#         'task': 'display',
-#         'schedule': timedelta(minutes=1),
-#         'args': (data.id),
-#     },
-# }
+CELERYBEAT_SCHEDULE = {
+    'test_print': {
+        'task': 'get_rpi_data',
+        'schedule': timedelta(minutes=1),
+        'args': ()
+    },
+}
 # Application definition
 
 INSTALLED_APPS = [

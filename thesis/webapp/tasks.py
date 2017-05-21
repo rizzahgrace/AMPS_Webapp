@@ -3,7 +3,7 @@ from celery.decorators import periodic_task
 from celery.utils.log import get_task_logger
 from celery import task
 
-import uuid
+import uuid, requests
 
 logger = get_task_logger(__name__)
 
@@ -17,7 +17,14 @@ logger = get_task_logger(__name__)
 # 	r=requests.post(url, data=data).text
 # 	print(r)
 
-@task()
+# to start the worker enter 'python manage.py celery worker --loglevel=info'
+@task(name="get_rpi_data")
+def rpidata():
+	url="https://128.199.158.44:8001/webapp/weather"
+	r=requests.get(url).text
+	print(r)
+
+@task(name = "add_numbers")
 def add(x,y): 
 	return x+y
 
