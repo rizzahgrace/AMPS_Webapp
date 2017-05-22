@@ -1,0 +1,81 @@
+{% load static %}
+
+<html>
+    <head>
+        <title>New Record</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    </head>
+    <body>
+
+    <div class="container">
+
+    	<div class="row">
+    		<div class="col-lg-3 col-lg-offset-5 centered">
+            	<h1>New Record</h1>
+            </div>
+        </div>
+
+        <div class="row">
+			{% if messages %}
+			<ul class="messages">
+			    {% for msg in messages %}       
+			    <li>
+			        <div class="alert alert-{{msg.level_tag}}" role="alert">
+			 	{{msg.message}}
+				</div>
+			    </li>
+			    {% endfor %}
+			</ul>
+			{% endif %}
+		</div>
+
+        <div class="content container">
+            <div class="row">
+            	<div style = "text-align: center;">
+	            <form method="POST">
+	            	{% csrf_token %}
+	    			<div class="form-group">	
+						<label for="{{ form.winddir.id_for_label }}">Wind Direction: </label>
+						<div>{{ form.winddir }}</div>
+						
+					</div>
+	    			<div class="form-group">	
+						<label for="{{ form.windspeedmph.id_for_label }}">Wind Speed (mph): </label>
+						<div>{{ form.windspeedmph }}</div>
+					</div>
+	    			<div class="form-group">	
+						<label for="{{ form.windspdmph_avg2m.id_for_label }}">Wind Speed (mph) Average: </label>
+						<div>{{ form.windspdmph_avg2m }}</div>
+					</div>
+					<div class="form-group">
+    					<label for="{{ form.rainin.id_for_label }}">Rain: </label>
+    					<div>{{ form.rainin }}</div>
+					</div>
+					<div class="form-group">
+    					<label for="{{ form.dailyrainin.id_for_label }}">Total Rain: </label>
+    					<div>{{ form.dailyrainin }}</div>
+					</div>
+					<div class="form-group">
+    					<label for="{{ form.humidity.id_for_label }}">Humidity: </label>
+    					<div>{{ form.humidity }}</div>
+					</div>
+					<div class="form-group">
+    					<label for="{{ form.tempf.id_for_label }}">Temperature: </label>
+    					<div>{{ form.tempf }}</div>
+					</div>
+					<div class="form-group">
+    					<label for="{{ form.pressure.id_for_label }}">Pressure: </label>
+    					<div>{{ form.pressure }}</div>
+					</div>
+	        		<button type="submit" class="save btn btn-default">Save</button>
+    			</form>
+    			<a class="btn btn-link" href="{% url 'webapp:index'%}">Go back to Menu</a>
+    			</div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+</html>

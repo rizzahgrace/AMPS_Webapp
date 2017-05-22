@@ -12,16 +12,22 @@ class UploadCSVFile(forms.Form):
         empty_label='Choose an owner'
     )
 
-class recordWeather(forms.Form):
+class recordWeather(forms.ModelForm):
     winddir = forms.FloatField(label="Wind Direction", required=True,)
     windspeedmph = forms.FloatField(label="Wind Speed (mph)", required=True,)
     windspdmph_avg2m = forms.FloatField(label="Wind Speed (mph) Average", required=True,)
     rainin = forms.FloatField(label="Rain", required=True,)
     dailyrainin = forms.FloatField(label="Total Rain", required=True,)
     humidity = forms.FloatField(label="Humidity", required=True,)
+    tempf = forms.FloatField(label="Temperature", required=True,)
     pressure = forms.FloatField(label="Pressure", required=True,)
 
-class recordPower(forms.Form)
+    class Meta:
+        model = RawData_Weather
+        fields = ['winddir', 'windspeedmph', 'windspdmph_avg2m', 'rainin', 'dailyrainin', 'humidity', 'tempf', 'pressure']
+
+
+class recordPower(forms.Form):
     grid = forms.FloatField(label="Grid", required=True,)
     load = forms.FloatField(label="Load", required=True,)
     batt_curr = forms.FloatField(label="Battery Current", required=True,)

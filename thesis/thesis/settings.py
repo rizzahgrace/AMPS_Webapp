@@ -27,7 +27,7 @@ SECRET_KEY = '6xtiu3^3%bwd)jz-ykdj-ngig+=vmhfr&tf2#8^8n7eydqfdo4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.33.10',]
 
 BROKER_URL = 'django://'
 CELERY_IMPORTS = ('webapp.tasks', )

@@ -14,6 +14,12 @@ class RawData_Weather(models.Model):
 	pressure = models.FloatField(null=True)
 	timestamp = models.DateTimeField('date logged', default = now, null=True)
 
+	def check_time(record):
+		if (record.timestamp.minute == 00 or record.timestamp.minute == 15 or record.timestamp.minute == 30 or record.timestamp.minute == 45):
+			return True
+		else:
+			return False
+			
 	def check_values(record):
 		if (record.winddir >= 0):
 			return True

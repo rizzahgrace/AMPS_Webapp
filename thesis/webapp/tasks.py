@@ -21,7 +21,7 @@ logger = get_task_logger(__name__)
 @task(name="get_rpi_data")
 def rpidata():
 	url="https://128.199.158.44:8001/webapp/weather"
-	r=requests.get(url).text
+	r=requests.get(url, 
 	print(r)
 
 @task(name = "add_numbers")
@@ -30,3 +30,11 @@ def add(x,y):
 
 def generate_msgid():
 	return uuid.uuid4().hex
+
+#modify rpi code to post values to the form
+# import requests
+
+# url = 'http://url.com'
+# query = {'field': value}
+# res = requests.post(url, data=query)
+# print(res.text)
