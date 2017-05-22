@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
+from django.utils import timezone
+from django.contrib import messages
 from webapp.forms import UploadCSVFile, recordUser, recordWeather, recordPower
 from webapp.utils import handle_upload_file
 from highcharts.views import (HighChartsMultiAxesView, HighChartsStockView)
@@ -42,7 +44,7 @@ def csv(request):
 
 	return render(request, 'webapp/csv.html', {'form': form})
 
-def recordWeather(request):
+def weatherdata(request):
 	if request.method == 'POST':
 		form = recordWeather(request.POST)
 
@@ -57,17 +59,14 @@ def recordWeather(request):
 			dt = timezone.now()
 			dt = dt.replace(second=0, microsecond=0)
 			record = RawData_Weather(winddir=winddir, windspeedmph=windspeedmph, windspdmph_avg2m=windspdmph_avg2m, rainin=rainin, dailyrainin=dailyrainin, humidity=humidity, pressure=pressure, timestamp = dt)
-			if (RawData_Weather.check_time(record)):
-				record.save()
-				messages.success(request, 'Record saved')
-				#return HttpResponseRedirect(reverse('hmain:hmain'))
-			else:
-				messages.error(request, 'Wrong time')
+			record.save()
+			messages.success(request, 'Record saved')
 	else:
 		form = recordWeather()
+
 	return render(request, 'webapp/recordweather.html', {'form': form})
 
-def recordPower(request):
+def powerdata(request):
 	if request.method == 'POST':
 		form = recordPower(request.POST)
 
