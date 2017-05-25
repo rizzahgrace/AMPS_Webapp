@@ -2,7 +2,8 @@ from celery.task.schedules import crontab
 from celery.decorators import periodic_task
 from celery.utils.log import get_task_logger
 from celery import task
-
+from django.cache import cache
+from webapp.models import RawData_Weather, RawData_AMPS
 import uuid, requests
 
 logger = get_task_logger(__name__)
@@ -20,10 +21,18 @@ logger = get_task_logger(__name__)
 # to start the worker enter 'python manage.py celery worker --loglevel=info'
 @task(name="get_rpi_data")
 def rpidata():
-	url="https://128.199.158.44:8001/webapp/weather"
-	r=requests.get(url, 
+	url="pi@192.168.1.118"
+	r=requests.get(url).text
 	print(r)
 
+@task(name="update_data")
+def updatedata(username, ttl):
+	recent = RawData_AMPS.objects.filter(id = username.id).last
+
+	cache.set(username, (tweets, now+ttl), 2592000)
+	#send id to the view para maupdate yung page
+	#look for a page refesher or kahit yung mga data displayed sa view
+	
 @task(name = "add_numbers")
 def add(x,y): 
 	return x+y
