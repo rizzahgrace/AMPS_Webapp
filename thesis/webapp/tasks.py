@@ -2,8 +2,10 @@ from celery.task.schedules import crontab
 from celery.decorators import periodic_task
 from celery.utils.log import get_task_logger
 from celery import task
-from django.cache import cache
+# from django.cache import cache
 from webapp.models import RawData_Weather, RawData_AMPS
+from webapp.views import weather
+from django.shortcuts import render
 import uuid, requests
 
 logger = get_task_logger(__name__)
@@ -26,10 +28,10 @@ def rpidata():
 	print(r)
 
 @task(name="update_data")
-def updatedata(username, ttl):
-	recent = RawData_AMPS.objects.filter(id = username.id).last
-
-	cache.set(username, (tweets, now+ttl), 2592000)
+def updateweatherdata():
+	recent = RawData_Weather.objects.last().id 
+	# if data.id < recent:
+	return render(request, 'webapp/weather.html', {"data":recent})
 	#send id to the view para maupdate yung page
 	#look for a page refesher or kahit yung mga data displayed sa view
 	

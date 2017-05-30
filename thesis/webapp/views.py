@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
-from django.cache import cache
+# from django.cache import cache
 from django.utils import timezone
 from django.contrib import messages
 from webapp.forms import UploadCSVFile, recordUser, recordWeather, recordPower
@@ -126,13 +126,13 @@ def login_user(request):
 
 def fetch_recent_data(user, lifetime=60):
 	data = cache.get(user)
-	if data = None:
-		update_data.delay(user, lifetime)
-		data = None
-	else:
-		recent, expiry = data
-		if exprixy < datetime.datetime.now()
-		update_data.delay(user, lifetime)
+	# if data = None:
+	# 	update_data.delay(user, lifetime)
+	# 	data = None
+	# else:
+	# 	recent, expiry = data
+	# 	if exprixy < datetime.datetime.now()
+	# 	update_data.delay(user, lifetime)
 	return data
 
 class AdvancedGraph(HighChartsMultiAxesView):
