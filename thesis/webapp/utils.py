@@ -77,10 +77,10 @@ def handle_upload_file(f, owner):
 			datacsvweather.timestamp=datetime.datetime.strptime(row[16], '%m/%d/%Y %H:%M')
 		except(ValueError):
 			datacsvweather.timestamp= None
-		try:
-			datacsvamps.timestamp=datetime.datetime.strptime(row[16], '%m/%d/%Y %H:%M')
-		except(ValueError):
-			datacsvweather.timestamp= None
+		# try:
+		# 	datacsvamps.timestamp=datetime.datetime.strptime(row[16], '%m/%d/%Y %H:%M')
+		# except(ValueError):
+		# 	datacsvweather.timestamp= None
 		datacsvamps.owner = owner
 		datacsvweather.save()
 		datacsvamps.save()

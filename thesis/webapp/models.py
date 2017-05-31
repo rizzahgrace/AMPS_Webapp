@@ -12,13 +12,7 @@ class RawData_Weather(models.Model):
 	humidity = models.FloatField(null=True)
 	tempf = models.FloatField(null=True)
 	pressure = models.FloatField(null=True)
-	timestamp = models.DateTimeField('date logged', default = now, null=True)
-
-	def check_values(record):
-		if (record.winddir >= 0):
-			return True
-		else:
-			return False
+	timestamp = models.DateTimeField('date logged', default = now)
 
 class RawData_AMPS(models.Model):
 	grid = models.FloatField(null=True)
@@ -31,5 +25,5 @@ class RawData_AMPS(models.Model):
 	SP_pow = models.FloatField(null=True)
 	# measured = models.FloatField(null=True)
 	# predicted = models.FloatField(null=True)
-	timestamp = models.DateTimeField('date logged', default = now, null=True)
+	timestamp = models.DateTimeField('date logged', default = now)
 	owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)

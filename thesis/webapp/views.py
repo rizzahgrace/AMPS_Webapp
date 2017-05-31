@@ -28,9 +28,10 @@ def weather(request):
 	data = RawData_Weather.objects.last()
 	return render(request, 'webapp/weather.html', {"data":data})
 
+@login_required()
 def power(request):
-	# data = RawData_AMPS.objects.filter(owner = request.user).last()
-	return render(request, 'webapp/power1.html', {"data":fetch_recent_data(request.user)})
+	data = RawData_AMPS.objects.filter(owner = request.user).last()
+	return render(request, 'webapp/power1.html', {"data":data})
 
 def csv(request):
 	if request.method == 'POST':
@@ -112,7 +113,6 @@ def login_user(request):
     if request.POST:
         username = request.POST['username']
         password = request.POST['password']
-
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
