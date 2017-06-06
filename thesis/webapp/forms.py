@@ -34,6 +34,12 @@ class recordPower(forms.Form):
     batt_pow = forms.FloatField(label="Battery Power", required=True,)
     SP_curr = forms.FloatField(label="Solar Panel Current", required=True,)
     SP_volt = forms.FloatField(label="Solar Panel Voltage", required=True,)
+    owner = forms.ModelChoiceField(
+        label="Owner",
+        queryset=User.objects.order_by('username'),
+        required=True,
+        empty_label='Choose an owner'
+    )
 
 
 class recordUser(forms.Form):

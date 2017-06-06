@@ -77,15 +77,12 @@ def powerdata(request):
 			batt_pow = form.cleaned_data['batt_pow']
 			SP_curr = form.cleaned_data['SP_curr']
 			SP_volt = form.cleaned_data['SP_volt']
+			owner = form.cleaned_data['owner']
 			dt = timezone.now()
 			dt = dt.replace(second=0, microsecond=0)
-			record = RawData_AMPS(grid=grid, load=load, batt_curr=batt_curr, batt_pow=batt_pow, SP_curr=SP_curr, SP_volt=SP_volt, timestamp = dt)
-			if (RawData_Weather.check_time(record)):
-				record.save()
-				messages.success(request, 'Record saved')
-				#return HttpResponseRedirect(reverse('hmain:hmain'))
-			else:
-				messages.error(request, 'Wrong time')
+			record = RawData_AMPS(grid=grid, load=load, batt_curr=batt_curr, batt_pow=batt_pow, SP_curr=SP_curr, SP_volt=SP_volt, owner=owner, timestamp = dt)				
+			record.save()
+			messages.success(request, 'Record saved')
 	else:
 		form = recordPower()
 	return render(request, 'webapp/recordpower.html', {'form': form})
