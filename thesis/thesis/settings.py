@@ -40,7 +40,7 @@ CELERY_IMPORTS = ('webapp.tasks', )
 
 CELERYBEAT_SCHEDULE = {
     'test_print': {
-        'task': 'update_data',
+        'task': 'get_rpi_data',
         'schedule': timedelta(minutes=1),
         'args': ()
     },

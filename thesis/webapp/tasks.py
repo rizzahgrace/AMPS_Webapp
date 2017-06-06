@@ -23,8 +23,8 @@ logger = get_task_logger(__name__)
 # to start the worker enter 'python manage.py celery worker --loglevel=info'
 @task(name="get_rpi_data")
 def rpidata():
-	url="pi@192.168.1.118"
-	r=requests.get(url).text
+	url="http://192.168.8.103/May.json"
+	r=requests.get(url)
 	print(r)
 
 @task(name="update_data")

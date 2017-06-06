@@ -38,12 +38,15 @@ with open('May.csv', "a") as myfile:
     myfile.write(data_string+"\n")
 
 with open('May.json', "w") as myjsonfile:
+	# this works but it starts from the pinakastart of the file
+	csvfile = open('May.csv', 'r')
 	fieldnames = ("grid", "load","SP_volt","SP_curr","SP_pow","batt_volt","batt_curr","batt_pow","winddir", "windspeedmph", "windspdmph_avg2m", "rainin", "dailyrainin", "humidity", "tempf", "pressure", "timestamp")
-	data = data_string.split(",")
-	reader = csv.DictReader(tuple(data), fieldnames)
+	# data = data_string.split(",")
+	reader = csv.DictReader(csvfile, fieldnames)
 	for row in reader:
 		json.dump(row, myjsonfile)
 		myjsonfile.write('\n')
+	
 
 
 sys.exit()

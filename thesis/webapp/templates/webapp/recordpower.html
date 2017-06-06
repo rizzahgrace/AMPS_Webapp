@@ -37,37 +37,29 @@
 	            <form method="POST">
 	            	{% csrf_token %}
 	    			<div class="form-group">	
-						<label for="{{ form.winddir.id_for_label }}">Wind Direction: </label>
-						<div>{{ form.winddir }}</div>
+						<label for="{{ form.grid.id_for_label }}">Grid: </label>
+						<div>{{ form.grid }}</div>
 						
 					</div>
 	    			<div class="form-group">	
-						<label for="{{ form.windspeedmph.id_for_label }}">Wind Speed (mph): </label>
-						<div>{{ form.windspeedmph }}</div>
+						<label for="{{ form.load.id_for_label }}">Load: </label>
+						<div>{{ form.load }}</div>
 					</div>
 	    			<div class="form-group">	
-						<label for="{{ form.windspdmph_avg2m.id_for_label }}">Wind Speed (mph) Average: </label>
-						<div>{{ form.windspdmph_avg2m }}</div>
+						<label for="{{ form.batt_curr.id_for_label }}">Battery Current: </label>
+						<div>{{ form.batt_curr }}</div>
 					</div>
 					<div class="form-group">
-    					<label for="{{ form.rainin.id_for_label }}">Rain: </label>
-    					<div>{{ form.rainin }}</div>
+    					<label for="{{ form.batt_pow.id_for_label }}">Battery Power: </label>
+    					<div>{{ form.batt_pow }}</div>
 					</div>
 					<div class="form-group">
-    					<label for="{{ form.dailyrainin.id_for_label }}">Total Rain: </label>
-    					<div>{{ form.dailyrainin }}</div>
+    					<label for="{{ form.SP_volt.id_for_label }}">Solar Panel Voltage: </label>
+    					<div>{{ form.SP_volt }}</div>
 					</div>
 					<div class="form-group">
-    					<label for="{{ form.humidity.id_for_label }}">Humidity: </label>
-    					<div>{{ form.humidity }}</div>
-					</div>
-					<div class="form-group">
-    					<label for="{{ form.tempf.id_for_label }}">Temperature: </label>
-    					<div>{{ form.tempf }}</div>
-					</div>
-					<div class="form-group">
-    					<label for="{{ form.pressure.id_for_label }}">Pressure: </label>
-    					<div>{{ form.pressure }}</div>
+    					<label for="{{ form.SP_curr.id_for_label }}">Solar Panel Current: </label>
+    					<div>{{ form.SP_curr }}</div>
 					</div>
 	        		<button type="submit" class="save btn btn-default">Save</button>
     			</form>

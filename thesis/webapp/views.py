@@ -70,7 +70,6 @@ def weatherdata(request):
 def powerdata(request):
 	if request.method == 'POST':
 		form = recordPower(request.POST)
-
 		if form.is_valid():
 			grid = form.cleaned_data['grid']
 			load = form.cleaned_data['load']
@@ -266,59 +265,63 @@ class PowerGraph(HighChartsMultiAxesView):
 		data = super(PowerGraph, self).get_data()
 		return data
 
-# class HourlyPower(HighChartsMultiAxesView):
-# 	title = 'Power'
-# 	subtitle = ''
-# 	chart_type = ''
-# 	chart = {'zoomType': 'xy'}
-# 	tooltip = {'shared': 'true'}
-# 	legend = {
-# 		'layout': 'vertical',
-# 		'align': 'left',
-# 		'verticalAlign': 'top',
-# 		'y': 30
-# 	}
-# 	def get_data(self):
-# 		# data = {'id': [], 'load': [], 'SP_pow':[], 'timestamp':[]}
-# 		data = {'load': [], 'timestamp':[]}
-# 		# f = RawData_AMPS.objects.filter(owner = User.objects.get(username=self.request.user))[:10]
-# 		f = RawData_AMPS.objects.filter(owner = User.objects.get(username='julius')).annotate(start_day=Trunc('timestamp', 'day', output_field=DateTimeField())).values('start_day').aggregate(load_day=Avg('load'))
-# 		for unit in f:
-# 			# data['id'].append(unit.id)
-# 			data['timestamp'].append(unit.start_day)
-# 			data['load'].append(unit.load_day)
-# 			# data['SP_pow'].append(unit.SP_pow)
+class HourlyPower(HighChartsMultiAxesView):
+	title = 'Power'
+	subtitle = ''
+	chart_type = ''
+	chart = {'zoomType': 'xy'}
+	tooltip = {'shared': 'true'}
+	legend = {
+		'layout': 'vertical',
+		'align': 'left',
+		'verticalAlign': 'top',
+		'y': 30
+	}
+	def get_data(self):
+		# data = {'id': [], 'load': [], 'SP_pow':[], 'timestamp':[]}
+		data = {'load': [], 'timestamp':[]}
+		# f = RawData_AMPS.objects.filter(owner = User.objects.get(username=self.request.user))[:10]
+		f = (RawData_AMPS.objects
+			.filter(owner = User.objects.get(username=self.request.user))
+			.annotate(start_day=Trunc('timestamp', 'day', output_field=DateTimeField()))
+			.values('start_day')
+			.aggregate(load_day=Avg('load')))
+		for unit in f:
+			# data['id'].append(unit.id)
+			data['timestamp'].append(unit.start_day)
+			data['load'].append(unit.load_day)
+			# data['SP_pow'].append(unit.SP_pow)
 
 
-# 		self.categories = data['timestamp']
+		self.categories = data['timestamp']
 		
-# 		self.yaxis = {
-# 			'title': {
-# 				'text': 'Title 1'
-# 			},
-# 			'plotLines': [
-# 				{
-# 					'value': 0,
-# 					'width': 1,
-# 					'color': '#808080'
-# 				}
-# 			]
-# 		}
-# 		self.serie = [
-# 			{
-# 			'name': 'Load',
-# 			'data': data['load']
-# 			}
-# 			# {
-# 			# 'name': 'Power Generated',
-# 			# 'data': data['SP_pow']
-# 			# } 
-# 		]
+		self.yaxis = {
+			'title': {
+				'text': 'Title 1'
+			},
+			'plotLines': [
+				{
+					'value': 0,
+					'width': 1,
+					'color': '#808080'
+				}
+			]
+		}
+		self.serie = [
+			{
+			'name': 'Load',
+			'data': data['load']
+			}
+			# {
+			# 'name': 'Power Generated',
+			# 'data': data['SP_pow']
+			# } 
+		]
 
-# 		##### X LABELS
-# 		# self.axis = data['id']
+		##### X LABELS
+		# self.axis = data['id']
 		
-# 		##### SERIES WITH VALUES
-# 		self.series = self.serie
-# 		data = super(HourlyPower, self).get_data()
-# 		return data
+		##### SERIES WITH VALUES
+		self.series = self.serie
+		data = super(HourlyPower, self).get_data()
+		return data
