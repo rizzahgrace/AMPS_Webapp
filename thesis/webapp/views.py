@@ -281,15 +281,11 @@ class HourlyPower(HighChartsMultiAxesView):
 		# data = {'id': [], 'load': [], 'SP_pow':[], 'timestamp':[]}
 		data = {'load': [], 'timestamp':[]}
 		# f = RawData_AMPS.objects.filter(owner = User.objects.get(username=self.request.user))[:10]
-		f = (RawData_AMPS.objects
-			.filter(owner = User.objects.get(username=self.request.user))
-			.annotate(start_day=Trunc('timestamp', 'day', output_field=DateTimeField()))
-			.values('start_day')
-			.aggregate(load_day=Avg('load')))
+		f = RawData_AMPS.objects.filter(owner = User.objects.get(username=self.request.user)).annotate(start_day=Trunc('timestamp', 'day', output_field=DateTimeField())).values('start_day').annotate(load_day=Avg('load'))
 		for unit in f:
 			# data['id'].append(unit.id)
-			data['timestamp'].append(unit.start_day)
-			data['load'].append(unit.load_day)
+			data['timestamp'].append(unit.values('start_day'))
+			data['load'].append(unit.valuess('load'))
 			# data['SP_pow'].append(unit.SP_pow)
 
 
