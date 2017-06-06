@@ -1,3 +1,4 @@
 .vagrant/machine/*
 *.pyc
-thesis/redis-3.2.8/*	
+thesis/redis-3.2.8/*
+AMPS_WebApp_Reboot/*
