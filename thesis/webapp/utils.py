@@ -41,48 +41,48 @@ def handle_upload_file(f, owner):
 			datacsvamps.batt_pow = float(row[7])
 		except(ValueError):
 			datacsvamps.batt_pow = None	
-		try:
-			datacsvweather.winddir = float(row[8])
-		except(ValueError):
-			datacsvweather.winddir = None
-		try:
-			datacsvweather.windspeedmph = (float(row[9])*1.6093440)
-		except(ValueError):
-			datacsvweather.windspeedmph = None
-		try:
-			datacsvweather.windspdmph_avg2m = float(row[10])
-		except(ValueError):
-			datacsvweather.windspdmph_avg2m = None
-		try:
-			datacsvweather.rainin = float(row[11])
-		except(ValueError):
-			datacsvweather.rainin = None
-		try:
-			datacsvweather.dailyrainin = float(row[12])
-		except(ValueError):
-			datacsvweather.dailyrainin = None
-		try:
-			datacsvweather.humidity = float(row[13])
-		except(ValueError):
-			datacsvweather.humidity = None
-		try:
-			datacsvweather.tempf = (((float(row[14])-32)*5)/9)
-		except(ValueError):
-			datacsvweather.tempf = None
-		try:
-			datacsvweather.pressure = float(row[15])
-		except(ValueError):
-			datacsvweather.pressure = None
-		try:
-			datacsvweather.timestamp=datetime.datetime.strptime(row[16], '%m/%d/%Y %H:%M')
-		except(ValueError):
-			datacsvweather.timestamp= None
+		# try:
+		# 	datacsvweather.winddir = float(row[8])
+		# except(ValueError):
+		# 	datacsvweather.winddir = None
+		# try:
+		# 	datacsvweather.windspeedmph = (float(row[9])*1.6093440)
+		# except(ValueError):
+		# 	datacsvweather.windspeedmph = None
+		# try:
+		# 	datacsvweather.windspdmph_avg2m = float(row[10])
+		# except(ValueError):
+		# 	datacsvweather.windspdmph_avg2m = None
+		# try:
+		# 	datacsvweather.rainin = float(row[11])
+		# except(ValueError):
+		# 	datacsvweather.rainin = None
+		# try:
+		# 	datacsvweather.dailyrainin = float(row[12])
+		# except(ValueError):
+		# 	datacsvweather.dailyrainin = None
+		# try:
+		# 	datacsvweather.humidity = float(row[13])
+		# except(ValueError):
+		# 	datacsvweather.humidity = None
+		# try:
+		# 	datacsvweather.tempf = (((float(row[14])-32)*5)/9)
+		# except(ValueError):
+		# 	datacsvweather.tempf = None
+		# try:
+		# 	datacsvweather.pressure = float(row[15])
+		# except(ValueError):
+		# 	datacsvweather.pressure = None
+		# try:
+		# 	datacsvweather.timestamp=datetime.datetime.strptime(row[16], '%m/%d/%Y %H:%M')
+		# except(ValueError):
+		# 	datacsvweather.timestamp= None
 		try:
 			datacsvamps.timestamp=datetime.datetime.strptime(row[16], '%m/%d/%Y %H:%M')
 		except(ValueError):
 			datacsvweather.timestamp= None
 		datacsvamps.owner = owner
-		datacsvweather.save()
+		# datacsvweather.save()
 		datacsvamps.save()
 
 
